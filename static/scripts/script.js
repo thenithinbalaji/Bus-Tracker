@@ -1,5 +1,7 @@
-// Initialize and add the map
+// functions added by Likith Venkat
+
 function initMap() {
+// Initialize and add the map
     // The location of Uluru
     const uluru = { lat: -25.344, lng: 131.031 };
     // The map, centered at Uluru
@@ -15,3 +17,9 @@ function initMap() {
   }
   
   window.initMap = initMap;
+
+// functions added by TheNithinBalaji
+
+function forgotpwd(){
+  alert("That's Cool! But Who Asked?");
+}

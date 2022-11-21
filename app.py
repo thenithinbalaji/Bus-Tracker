@@ -1,11 +1,15 @@
-from flask import Flask, render_template, send_file, request
+from flask import Flask, render_template, send_file, request, redirect, url_for
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def home():
-    return render_template("index.html")
+    if request.method == "GET":
+        return render_template("index.html")
+    else:
+        print(request.form)
+        return redirect(url_for('homepage'))
 
 @app.route("/signup")
 def signup():

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bus Tracking System</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <script>
+      const successCallback = (position) => {
+      console.log(position);
+      console.log(position.coords);
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
+
+      };
+
+      const errorCallback = (error) => {
+        console.log(error);
+      };
+
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+  </script>
+  <script type="module" src="./map.js"></script>
+  <body class="body">
+    <div class="navbar">
+        <div>
+            <a href="C:\Users\likhi\Downloads\Software Lab Project- Bus Tracker\homepage.html">
+              <img class="buspic" src="C:\Users\likhi\Downloads\Software Lab Project- Bus Tracker\SSN BUS PIC WHITE.png" alt="">
+            </a>
+
+        </div>
+        <div class="busRoute">
+            <p class="choose">Choose Bus Route:</p>
+            <select class="busbox" name="" id="bus"></select>
+        </div>
+        <div style="padding-left: 0px;top: 70px;left: 520px;" class="report">
+            <a href="C:\Users\likhi\Downloads\Software Lab Project- Bus Tracker\report.html"><button class="Button" style="width: 90px; height: 50px; border-radius: 15px;">Report an Issue</button></a>
+        </div>
+        <div class="location">
+            <p class="choose">Choose Location:</p>
+            <select class="busbox" name="" id="bus">
+            </select>
+        </div>
+        <div>
+          <a href=""><img class="profile" src="C:\Users\likhi\Downloads\Software Lab Project- Bus Tracker\Profile.png" alt=""></a>
+        </div>
+        <div id="map" style="position: relative;overflow: hidden;margin-top: 100px;margin-left: 30px;height: 450px;width: 1400px;"></div>
+
+    <!--Add a script by google -->
+    <script src=
+"https://maps.googleapis.com/maps/api/js?key=AIzaSyBjgKdAouxdTuxAbyH-YqcMVZQ5AC_WeWo&callback=initMap&libraries=&v=weekly"
+        async>
+    </script>
+
+    <script>
+
+        // Initialize and add the map
+        function initMap() {
+
+            // The location of Geeksforgeeks office
+            var center = {lat: 13.0827, lng: 80.2707};
+
+            // Create the map, centered at gfg_office
+            const map = new google.maps.Map(
+                    document.getElementById("map"), {
+
+                // Set the zoom of the map
+                zoom: 10,
+                center: center,
+            });
+
+
+            var locations = [
+    ['Velachery', 12.9815, 80.2180],
+    ['KK Nagar', 13.0410, 80.1994],
+    ['Egmore',13.0732, 80.2609],
+    ['Koyembedu', 13.0694, 80.1948],
+    ['SSN', 12.7517,80.2033]
+    
+  ];
+var marker, count;
+for (count = 0; count < locations.length; count++) {
+    marker = new google.maps.Marker({
+      position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+      map: map
+    });
+
+  }
+        }
+    </script>
+    </div>
+  </body>
+</html>

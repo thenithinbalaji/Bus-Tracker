@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Bus Tracking System</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts/main.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/styles.css') }}"
+    />
+    <script src="{{url_for('static', filename='scripts/map.js')}}"></script>
   </head>
   <body class="body">
     <div class="navbar">
       <div>
-        <a href="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\homepage.html">
-          <img class="buspic" src="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\SSN BUS PIC WHITE.png" alt="">
+        <a href="\homepage">
+          <img
+            class="buspic"
+            src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}"
+            alt=""
+          />
         </a>
       </div>
-      <div class="busRoute" style="margin-left: 300px;width: 150px;">
-      <p class="choose">Recent Updates</p>
+      <div class="busRoute" style="margin-left: 300px; width: 150px">
+        <p class="choose">Recent Updates</p>
       </div>
       <div>
-        <a href=""><img class="profile" src="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\Profile.png" alt=""></a>
+        <a href=""
+          ><img
+            class="profile"
+            src="{{url_for('static', filename='assets/Profile.png')}}"
+            alt=""
+        /></a>
       </div>
     </div>
     <div class="box"></div>

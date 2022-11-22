@@ -11,6 +11,8 @@ body{
     
 }
 
+/* SIGN IN PAGE CSS */
+
 .sign-in-container{
     display:grid;
     margin: 0px;
@@ -135,7 +137,7 @@ text-align: center;
 color: #E9C400;
 }
 
-
+/* SIGN UP PAGE  */
 
 .box{
     position: absolute;

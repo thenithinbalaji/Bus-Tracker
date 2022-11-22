@@ -20,7 +20,10 @@
         
           <div class="sign-up">
           
-            <p class="sign-up-heading">Sign Up</p>
+            <div class="signup-heading">
+              <p>Sign Up</p>
+            </div>
+            
             
 
             <div class="signup-form">
@@ -31,65 +34,67 @@
                   <input
                     type="text"
                     id="signin-email"
-                    name="emailid"
+                    name="signin-email"
                     placeholder="Enter your Email ID"
                   />
                 </div>
 
                 <div class="signup-input">
-                  <label class="emailID" for="">Password</label><br />
+                  <label class="signup-pswd-label" for="">Password</label><br />
                   <input
                     type="text"
-                    id="email"
-                    name="emailid"
+                    id="signup-pswd"
+                    name="signup-pswd"
                     placeholder="Enter your password"
                   />
                 </div>
 
                 <div class="signin-input">
-                  <label class="emailID" for="">Confirm Password</label><br />
+                  <label class="signup-confpswd-label" for="">Confirm Password</label><br />
                   <input
                     type="text"
-                    id="email"
-                    name="emailid"
-                    placeholder="Enter your password"
+                    id="signup-confpswd"
+                    name="signup-confpswd"
+                    placeholder="Re-enter your password"
                   />
                 </div>
 
               </div>
-              <p class="text">I am a:</p>
-              <div class="student">
-                <input type="radio" name="age" value="30" />
-                <label for="age1">Student/Professor</label><br />
-                <input type="radio" name="age" value="60" />
-                <label for="age2">Driver</label><br />
+              
+              <div class="account-type">
+                <p>I am a:</p>
+                <input type="radio" name="student" value="30" />
+                <label for="student">Student/Professor</label><br />
+                <input type="radio" name="driver" value="60" />
+                <label for="driver">Driver</label><br />
               </div>
-              <div class="drop">
-                <label for="bus">Choose Bus route:</label>
-                <select name="" id="bus">
+
+              <div class="signup-busroute-dropdown">
+                <label for="signup-busroute">Choose Bus route:  </label>
+                <select name="signup-busroute" id="signup-busroute">
                   <option value="">1</option>
                   <option value="">2</option>
                   <option value="">3</option>
                   <option value="">4</option>
                 </select>
               </div>
-              <br /><br />
-              <div class="button">
+
+              <div class="signup-button-div">
                 <a href="/homepage"
-                  ><button class="Button" type="button">Sign Up</button></a
+                  ><button class="signup-button" type="button">Sign Up</button></a
                 >
               </div>
               
 
               </form>
               <div>
-                <a class="create1" href="/">Already have an account?Sign In</a>
+                <a class="back-to-signin" href="/">Already have an account?Sign In</a>
               </div>
             
         </div>
 
-        <div>
-            <img class="signup-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}"/>
+        <div class="sign-up-logo">
+            <img class="img-sign-up-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}"/>
         </div>
         
         

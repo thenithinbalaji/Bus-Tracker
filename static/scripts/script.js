@@ -1,4 +1,4 @@
-// functions added by Likith Venkat
+// functions added by Likhith Venkat
 
 function initMap() {
 // Initialize and add the map

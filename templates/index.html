@@ -4,35 +4,49 @@
 <head>
   <meta charset="utf-8" />
   <title>Bus Tracking System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
   <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
 </head>
 
-<body>
-  <div class="background">
-    <img class="img" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}" alt="" />
+<body class="sign-in-container">
+    <div class="sign-in-logo">
+      <img class="img-sign-in-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}" alt="bus-img" />
+    </div>
+    
     <div class="login">
-      <div class="contents">
-        <div class="login-text">
+      
+        <div class="login-heading">
           <p>Login</p>
         </div>
-        <div class="form">
+
+        <div class="sign-in-form">
+
           <form action="\" method="post">
-            <div class="Email">
-              <label class="emailID" for="">Email ID</label><br />
-              <input type="text" id="email" name="emailid" placeholder="Enter your Email ID" />
-            </div>
-            <div class="Email">
-              <label class="emailID" for="">Password</label><br />
-              <input type="text" id="email" name="password" placeholder="Enter your password" />
+
+            <div class="signin-input">
+              <label class="signin-email-label" for="">Email ID</label><br />
+              <input type="text" id="signin-email" name="signin-email" placeholder="Enter your Email ID" />
             </div>
 
-            <a href="#" class="forgot-pswd" onclick="forgotpwd()">Forgot password?</a>
+            <div class="signin-input">
+              <label class="signin-pswd-label" for="">Password</label><br />
+              <input type="text" id="signin-pswd" name="signin-pswd" placeholder="Enter your password" />
+              <a href="#" class="forgot-pswd" onclick="forgotpwd()">Forgot password?</a>
+            </div>
 
-            <div class="button">
-              <button class="Button" type="submit">Sign In</button>
+            
+            
+            <div class="signin-button-div">
+              <button class="signin-button" type="submit">Sign In</button>
             </div>
           </form>
+
+          
+          <a class="create-account" href="\signup">Create an account?</a>
+          
 
         </div>
 
@@ -44,13 +58,10 @@
           <label for="age2">Driver</label><br />
         </div> -->
 
-        <div>
-          <a class="create" href="\signup">Create an account?</a>
-        </div>
+        
 
-      </div>
+      
     </div>
-  </div>
 </body>
 
 </html>

@@ -30,7 +30,7 @@ def home():
         else:
             global userbusno
             userbusno = auth['bus_number']
-            return render_template("homepage.html", busno = auth['bus_number'])
+            return redirect(url_for('homepage'))
 
         return render_template("index.html")
 

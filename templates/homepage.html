@@ -9,103 +9,77 @@
   <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
   <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjgKdAouxdTuxAbyH-YqcMVZQ5AC_WeWo&callback=initMap&libraries=&v=weekly" async></script>
 </head>
 
-<script>
-  const successCallback = (position) => {
-    console.log(position);
-    console.log(position.coords);
-    console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
-  };
+<body onload="getlocation(); getuserbus()">
 
-  const errorCallback = (error) => {
-    console.log(error);
-  };
+  <div
+    style="display: flex; flex-direction:column; justify-content:center; width: 100%;height: 150px;background: #FCFAF1;box-shadow: 0px 4px 20px 20px #AA8F00;border-radius: 0px 0px 80px 80px;">
 
-  navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-</script>
+    <div style="display:flex; justify-content:space-evenly;">
 
-<script type="module" src="{{url_for('static', filename='scripts/script.js')}}"></script>
+      <img style="width: 200px;height: 100px;" src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}"
+        alt="" />
 
-<body>
-
-  <div class="homepage-container">
-  <div class="navbar">
-    <div>
-      <a href="\">
-        <img class="buspic" src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}" alt="" />
-      </a>
-    </div>
-
-    <div class="busRoute">
-      <p class="choose">Choose Bus Route:</p>
-      <select class="busbox" name="choice-busroute" id="choice-busroute"></select>
-    </div>
-
-    <div style="padding-left: 0px; top: 70px; left: 520px" class="report">
-      <a href="\report"><button style="width: 90px; height: 50px; border-radius: 15px" type="submit">
-          Report an Issue
-        </button></a>
-    </div>
-
-    <div class="location">
-      <p class="choose">Choose Location:</p>
-      <select class="busbox" name="choice-location" id="choice-location"></select>
-    </div>
-
-    <div>
-      <a href="\updates"><img class="goto-updates" src="{{url_for('static', filename='assets/bell.png')}}" alt="" /></a>
-    </div>
-  </div>
-  <div class=" map-item">
-      <div id="map">
-
-          <!--Add a script by google -->
-          <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjgKdAouxdTuxAbyH-YqcMVZQ5AC_WeWo&callback=initMap&libraries=&v=weekly"
-            async></script>
-
-          <script>
-            // Initialize and add the map
-            function initMap() {
-              // The location of Geeksforgeeks office
-              var center = { lat: 13.0827, lng: 80.2707 };
-
-              // Create the map, centered at gfg_office
-              const map = new google.maps.Map(document.getElementById("map"), {
-                // Set the zoom of the map
-                zoom: 10,
-                center: center,
-              });
-
-              var locations = [
-                ["Velachery", 12.9815, 80.218],
-                ["KK Nagar", 13.041, 80.1994],
-                ["Egmore", 13.0732, 80.2609],
-                ["Koyembedu", 13.0694, 80.1948],
-                ["SSN", 12.7517, 80.2033],
-              ];
-              var marker, count;
-              for (count = 0; count < locations.length; count++) {
-                marker = new google.maps.Marker({
-                  position: new google.maps.LatLng(
-                    locations[count][1],
-                    locations[count][2]
-                  ),
-                  map: map,
-                });
-              }
-            }
-        </script>
+      <div style="display: flex; flex-direction:column; justify-content:center">
+        <p class="choose">Choose Bus Route:</p>
+        <select name="choice-busroute" id="choice-busroute" style="border: 3px solid #E9C400;border-radius: 4px;" onchange = "initMap()">
+          <option value="none" selected disabled hidden>Pick a route</option>
+          <option value="1">Route 1</option>
+          <option value="2">Route 2</option>
+          <option value="3">Route 3</option>
+          <option value="4">Route 4</option>
+        </select>
       </div>
+
+      <div style="display: flex; flex-direction:column; justify-content:center">
+        <a href="\report">
+          <button type="submit"
+            style="font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px">
+            Report an Issue
+          </button>
+        </a>
+      </div>
+
+      <div style="display: flex; flex-direction:column; justify-content:center">
+        <p class="choose">Choose Location:</p>
+        <select name="choice-location" id="choice-location" style="border: 3px solid #E9C400;border-radius: 4px;" onchange = "initMap()">
+          <option value="none" selected disabled hidden>Pick a location</option>
+          <option value="none">None</option>
+          <option value="1">Velachery</option>
+          <option value="2">KK Nagar</option>
+          <option value="3">Egmore</option>
+          <option value="4">Koyembedu</option>
+        </select>
+      </div>
+
+      <div style="display: flex; flex-direction:column; justify-content:center">
+        <a href="\updates">
+          <img style="width: 50px;height: 50px; margin-top:15px" src="{{url_for('static', filename='assets/bell.png')}}"
+            alt="" />
+        </a>
+      </div>
+    </div>
   </div>
-  <div class="buttons-bar">
-    <button type="submit" class="share-location-btn">Share Location</button>
-    <a href="\"><button class="logout-btn">Log Out & Exit</button></a>
+
+  <div style="display:flex; flex-direction:row; justify-content:space-evenly; margin-top:100px;">
+    <div id="map">
+      <script>
+        initMap()
+      </script>
+    </div>
+
+    <div style="display:flex; flex-direction:column;justify-content:center;">
+      <button onclick="currentpos()"
+        style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px"" type="
+        submit">Share Location</button>
+      <a href="\logout"
+        style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none">Log Out</a>
+    </div>
+
   </div>
-</div>
-  
+
 </body>
 
 </html>

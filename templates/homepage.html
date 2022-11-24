@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
   <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjgKdAouxdTuxAbyH-YqcMVZQ5AC_WeWo&callback=initMap&libraries=&v=weekly" async></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw0ddIErnntB_jNO1mEbWTg7tZya699cQ&callback=initMap&libraries=&v=weekly" async></script>
 </head>
 
 <body onload="getlocation(); getuserbus()">
@@ -26,6 +26,7 @@
         <p class="choose">Choose Bus Route:</p>
         <select name="choice-busroute" id="choice-busroute" style="border: 3px solid #E9C400;border-radius: 4px;" onchange = "initMap()">
           <option value="none" selected disabled hidden>Pick a route</option>
+          <option value="none">None</option>
           <option value="1">Route 1</option>
           <option value="2">Route 2</option>
           <option value="3">Route 3</option>
@@ -47,10 +48,10 @@
         <select name="choice-location" id="choice-location" style="border: 3px solid #E9C400;border-radius: 4px;" onchange = "initMap()">
           <option value="none" selected disabled hidden>Pick a location</option>
           <option value="none">None</option>
-          <option value="1">Velachery</option>
-          <option value="2">KK Nagar</option>
-          <option value="3">Egmore</option>
-          <option value="4">Koyembedu</option>
+          <option value="0">Velachery</option>
+          <option value="1">KK Nagar</option>
+          <option value="2">Egmore</option>
+          <option value="3">Koyembedu</option>
         </select>
       </div>
 

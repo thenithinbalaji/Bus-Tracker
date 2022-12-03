@@ -1,105 +1,107 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Bus Tracking System</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static',filename='styles/styles.css') }}"
-    />
-    <script src="{{url_for('static', filename='scripts/map.js')}}"></script>
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8" />
+  <title>Bus Tracking System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
+  <script src="{{url_for('static', filename='scripts/map.js')}}"></script>
+</head>
 
-      <div class="signup-container">
-        
-          <div class="sign-up">
-          
-            <div class="signup-heading">
-              <p>Sign Up</p>
-            </div>
-            
-            
+<body>
 
-            <div class="signup-form">
-              <form action="">
+  <div class="signup-container">
 
-                <div class="signup-input">
-                  <label class="signup-email-label" for="">Email ID</label><br />
-                  <input
-                    type="text"
-                    id="signin-email"
-                    name="signin-email"
-                    placeholder="Enter your Email ID"
-                  />
-                </div>
+    <div class="sign-up">
 
-                <div class="signup-input">
-                  <label class="signup-pswd-label" for="">Password</label><br />
-                  <input
-                    type="text"
-                    id="signup-pswd"
-                    name="signup-pswd"
-                    placeholder="Enter your password"
-                  />
-                </div>
-
-                <div class="signin-input">
-                  <label class="signup-confpswd-label" for="">Confirm Password</label><br />
-                  <input
-                    type="text"
-                    id="signup-confpswd"
-                    name="signup-confpswd"
-                    placeholder="Re-enter your password"
-                  />
-                </div>
-
-              </div>
-              
-              <div class="account-type">
-                <p>I am a:</p>
-                <input type="radio" name="account" value="30" />
-                <label for="student">Student/Professor</label><br />
-                <input type="radio" name="account" value="60" />
-                <label for="driver">Driver</label><br />
-              </div>
-
-              <div class="signup-busroute-dropdown">
-                <label for="signup-busroute">Choose Bus route:  </label>
-                <select name="signup-busroute" id="signup-busroute">
-                  <option value="">1</option>
-                  <option value="">2</option>
-                  <option value="">3</option>
-                  <option value="">4</option>
-                </select>
-              </div>
-
-              <div class="signup-button-div">
-                <a href="/homepage"
-                  ><button class="signup-button" type="button">Sign Up</button></a
-                >
-              </div>
-              
-
-              </form>
-              <div>
-                <a class="back-to-signin" href="/">Already have an account?Sign In</a>
-              </div>
-            
-        </div>
-
-        <div class="sign-up-logo">
-            <img class="img-sign-up-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}"/>
-        </div>
-        
-        
+      <div class="signup-heading">
+        <p>Sign Up</p>
       </div>
+
+      <!-- Alerts regarding entered creds in form  -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+
+            {% if category == 'error' %}
+            <div style="background-color: rgba(255, 150, 146, 0.804); text-align:center; padding:10px; border-radius:12px;">
+              {{ message }}
+            </div>
+            {% endif %}
+        
+            {% if category == 'success' %}
+            <div style="background-color: #7ceca9; text-align:center; padding:10px; border-radius:12px;">
+              {{ message }}
+            </div>
+            {% endif%}
       
-    
-  </body>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form action="\signup" method="post">
+        <div class="signup-form">
+            <div class="signup-input">
+              <label class="signup-email-label" for="">Your Name</label><br />
+              <input type="text" id="signin-email" name="name" placeholder="Enter your Name" />
+            </div>
+
+            <div class="signup-input">
+              <label class="signup-email-label" for="">Email ID</label><br />
+              <input type="text" id="signin-email" name="email" placeholder="Enter your Email ID" />
+            </div>
+
+            <div class="signup-input">
+              <label class="signup-pswd-label" for="">Password</label><br />
+              <input type="text" id="signup-pswd" name="pswd" placeholder="Enter your password" />
+            </div>
+
+            <div class="signin-input">
+              <label class="signup-confpswd-label" for="">Confirm Password</label><br />
+              <input type="text" id="signup-confpswd" name="confpswd" placeholder="Re-enter your password" />
+            </div>
+
+        </div>
+
+        <div class="account-type">
+          <p>I am a:</p>
+          <input type="radio" name="account" value="passenger" checked/>
+          <label for="student">Student/Professor</label><br />
+          <input type="radio" name="account" value="driver" />
+          <label for="driver">Driver</label><br />
+        </div>
+
+        <div class="signup-busroute-dropdown">
+          <label for="signup-busroute">Choose Route</label>
+          <select name="busroute" id="signup-busroute" class="account-type">
+            <option value="1">Route 1</option>
+            <option value="2">Route 2</option>
+            <option value="3">Route 3</option>
+            <option value="4">Route 4</option>
+          </select>
+        </div>
+
+        <div class="signup-button-div">
+          <button class="signup-button" type="submit">Sign Up</button>
+        </div>
+
+      </form>
+
+      <div>
+        <a class="back-to-signin" href="/">Already have an account? Sign In</a>
+      </div>
+
+    </div>
+
+    <div class="sign-up-logo">
+      <img class="img-sign-up-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}" />
+    </div>
+
+  </div>
+
+</body>
+
 </html>

@@ -160,9 +160,10 @@ color: #E9C400;
 .signup-busroute-dropdown{
     display: flex;
     flex-direction: row;
-    align-items: left;
+    justify-content: space-evenly;
     margin: 5% 25%;
 
+    color:#705E00;
 
     background: #F9F9F9;
     border: 3px solid #E9C400;
@@ -204,8 +205,6 @@ color: #E9C400;
 
 
 .navbar{
-    grid-row-start: 1;
-    grid-row-end: 4;
     position: absolute;
     display: block;
     margin-left:0;
@@ -353,7 +352,7 @@ color: #E9C400;
     padding: 2%;
     font-family: 'Mako';
     height: 50px;
-    width: 100px;
+    width: 200px;
     position: relative;
     display: inline-block;
     align-items: center;
@@ -372,7 +371,7 @@ color: #E9C400;
     padding: 2%;
     font-family: 'Mako';
     height: 50px;
-    width: 100px;
+    width: 200px;
     background: #FCFAF1;
     display: inline-block;
     align-items: center;

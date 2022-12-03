@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Bus Tracking System</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts/main.js"></script>
-  </head>
-  <body class="body">
-    <div class="navbar">
-      <div>
-        <a href="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\homepage.html">
-          <img class="buspic" src="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\SSN BUS PIC WHITE.png" alt="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bus Tracking System</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
+  <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body class="body">
+
+  <div
+    style="display: flex; flex-direction:column; justify-content:center; width: 100%;height: 150px;background: #FCFAF1;box-shadow: 0px 4px 20px 20px #AA8F00;border-radius: 0px 0px 80px 80px;">
+
+    <div style="display:flex; justify-content:space-evenly;">
+      <a href="\homepage">
+        <img style="width: 200px;height: 100px;" src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}"
+          alt="" />
+      </a>
+
+      <div style="display: flex; flex-direction:column; justify-content:center">
+        <a href="\updates">
+          <img style="width: 50px;height: 50px; margin-top:15px" src="{{url_for('static', filename='assets/bell.png')}}"
+            alt="" />
         </a>
       </div>
+
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:row; justify-content:center; margin-top: 100px;">
+    <div>
+      <div style="font-family: 'Mako';font-weight: 400;  font-size: 25px; color: #705E00;">
+        <p><b>Report your issue here</b></p>
+      </div>
+
       <div>
-        <a href=""><img class="profile" src="C:\Users\sbnivetha\Desktop\Software Lab project\UI design\Profile.png" alt=""></a>
+        <textarea type="text"
+          style="height:150px; width:550px; font-family: 'Mako';font-weight: 400;  font-size: 20px; box-shadow: 2px 2px 15px #AA8F00;"
+          spellcheck="true" placeholder="Type your grievances here"></textarea>
+      </div>
+
+      <div style="display: flex; flex-direction:row; justify-content:center; ">
+
+        <a href="\homepage" onclick="alert('Your issue has been submitted successfully')"
+          style="font-family: 'Mako';font-weight: 400;font-size: 20px; text-align: center;color: #705E00; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none; text-align:center; padding:10px 25px 10px 25px;">Submit</a>
       </div>
     </div>
-    <div class="issuebox">
-        <p>Report your issue here</p>
-        <input type="text" style="height:50px;"><br><br>
-        <button class="reportbutton">Submit</button>
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

@@ -1,5 +1,9 @@
-.vscode
+#essential ignores
 __pycache__
+.vscode
 venv
+.env
+
+#custom ignores for nithin
 .temp
 temp.py

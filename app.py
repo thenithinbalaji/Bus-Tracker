@@ -1,11 +1,33 @@
-import json
+import pymongo, os
+from flask import Flask, flash, redirect, render_template, request, url_for, session
 
-import pymongo
-from flask import Flask, flash, redirect, render_template, request, send_file, url_for
+############################################################################
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "who am i"
 
+############################################################################
+
+# load env variables
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except Exception as err:
+    print(err)
+
+# fetching mongo connection string
+try:
+    mongo_uri = os.environ.get("mongo_connection_string")
+    print("MongoDB connection string = ", mongo_uri)
+except:
+    # this can be used to in code to check if connection was successful
+    mongo_uri = None
+    # if this is none, database error can be flashed in frontend
+
+#############################################################################
+
+# varible for checking user has logged in or not, replace this with flask session
 userbusno = 0
 
 
@@ -17,9 +39,7 @@ def home():
         college_mail_id = request.form.get("signin-email")
         password = request.form.get("signin-pswd")
 
-        client = pymongo.MongoClient("mongodb://localhost:27017")["bustracker"][
-            "logininfo"
-        ]
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
 
         # auth contains the collection that matches the mail id submitted in form
         auth = client.find_one({"college_mail_id": college_mail_id})
@@ -63,9 +83,7 @@ def signup():
             "role": account_type,
         }
 
-        client = pymongo.MongoClient("mongodb://localhost:27017")["bustracker"][
-            "logininfo"
-        ]
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
 
         # checking if mail id exists already
         auth = client.find_one({"college_mail_id": email})
@@ -101,9 +119,7 @@ def homepage():
 @app.route("/updates")
 def updates():
     if userbusno != 0:
-        client = pymongo.MongoClient("mongodb://localhost:27017")["bustracker"][
-            "announcements"
-        ]
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
         str = []
 
         for i in client.find({}, {"_id": 0, "Message": 1}):
@@ -133,9 +149,7 @@ def logout():
 
 @app.route("/location")
 def location():
-    client = pymongo.MongoClient("mongodb://localhost:27017")["bustracker"][
-        "buslocation"
-    ]
+    client = pymongo.MongoClient(mongo_uri)["bustracker"]["buslocation"]
 
     data = []
 
@@ -159,9 +173,7 @@ def sharelocation():
     lat = request.json["lat"]
     long = request.json["long"]
 
-    client = pymongo.MongoClient("mongodb://localhost:27017")["bustracker"][
-        "buslocation"
-    ]
+    client = pymongo.MongoClient(mongo_uri)["bustracker"]["buslocation"]
 
     client.update_one({"route": busno}, {"$set": {"location": [lat, long]}})
 

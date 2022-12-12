@@ -142,13 +142,36 @@ def updates():
         return redirect(url_for("home"))
 
 
-@app.route("/report")
+@app.route("/report", methods=["POST", "GET"])
 def report():
-    # if userbusno != 0:
-    if "userbusno" in session:
-        return render_template("report.html")
+    if request.method == "GET":
+        # if userbusno != 0:
+        if "userbusno" in session:
+            return render_template("report.html")
+        else:
+            return redirect(url_for("home"))
     else:
-        return redirect(url_for("home"))
+        # posting issues
+        issue = request.form.get("issue")
+
+        if len(issue) < 5:
+            flash(
+                "Issue too short to be posted. Please be more elaborate!",
+                category="error",
+            )
+        else:
+            # success
+            flash(
+                "Your issue has been successfully submitted to admin",
+                category="success",
+            )
+
+            # inserting issue to mongoDB
+            client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
+            data = {"frombus": session["userbusno"], "issue": issue}
+            client.insert_one(data)
+
+        return render_template("report.html")
 
 
 @app.route("/logout")

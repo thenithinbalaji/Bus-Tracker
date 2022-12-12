@@ -38,17 +38,38 @@
         <p><b>Report your issue here</b></p>
       </div>
 
-      <div>
-        <textarea type="text"
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+
+      {% if category == 'error' %}
+      <div style="background-color: rgba(255, 150, 146, 0.804); text-align:center; padding:10px; border-radius:12px;">
+        {{ message }}
+      </div>
+      {% endif %}
+
+      {% if category == 'success' %}
+      <div style="background-color: #7ceca9; text-align:center; padding:10px; border-radius:12px;">
+        {{ message }}
+      </div>
+      {% endif%}
+
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <br />
+      <form accept="\report" method="post">
+
+        <input type="text"
           style="height:150px; width:550px; font-family: 'Mako';font-weight: 400;  font-size: 20px; box-shadow: 2px 2px 15px #AA8F00;"
-          spellcheck="true" placeholder="Type your grievances here"></textarea>
-      </div>
+          spellcheck="true" placeholder="Type your grievances here" name="issue" />
 
-      <div style="display: flex; flex-direction:row; justify-content:center; ">
+        <button type="submit"
+          style="font-family: 'Mako';font-weight: 400;font-size: 20px; text-align: center;color: #705E00; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none; text-align:center; padding:10px 25px 10px 25px;">Submit</button>
+      </form>
 
-        <a href="\homepage" onclick="alert('Your issue has been submitted successfully')"
-          style="font-family: 'Mako';font-weight: 400;font-size: 20px; text-align: center;color: #705E00; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none; text-align:center; padding:10px 25px 10px 25px;">Submit</a>
-      </div>
+
     </div>
   </div>
 </body>

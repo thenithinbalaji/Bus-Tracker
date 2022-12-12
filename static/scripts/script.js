@@ -2,8 +2,6 @@
 image = "https://icons.iconarchive.com/icons/flaticonmaker/flat-style/48/bus-icon.png"
 
 var livelocationdata, userbusno, lat, long, stoppingsdata;
-var number_of_stops_per_route = 4;
-var number_of_routes = 4;
 
 // getting bus number of currently logged in user
 async function getuserbus() {
@@ -46,7 +44,7 @@ function initMap() {
   });
 
 
-  for (let count = 0; count < number_of_stops_per_route; count++) {
+  for (let count = 0; count < stoppingsdata[bus_number].length; count++) {
 
     marker = new google.maps.Marker({
 

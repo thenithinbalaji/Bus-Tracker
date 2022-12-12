@@ -21,14 +21,15 @@ try:
     mongo_uri = os.environ.get("mongo_connection_string")
     print("MongoDB connection string = ", mongo_uri)
 except:
-    # this can be used to in code to check if connection was successful
-    mongo_uri = None
-    # if this is none, database error can be flashed in frontend
+    # loading default connection string
+    mongo_uri = "mongodb://localhost:27017"
+    # run a python function here that initialises a local mongoDB database and its collections if they do not exist (future)
 
 #############################################################################
 
-# varible for checking user has logged in or not, replace this with flask session
-userbusno = 0
+# variable for checking user has logged in or not, replace this with flask session
+# userbusno = 0
+# update: the global variable has been replace with Flask Session and it's working
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -36,6 +37,7 @@ def home():
     if request.method == "GET":
         return render_template("index.html")
     else:
+        # post request i.e. login form was submitted
         college_mail_id = request.form.get("signin-email")
         password = request.form.get("signin-pswd")
 
@@ -53,15 +55,22 @@ def home():
         elif pbool == False:
             flash("ipass", category="error")  # invalid password
         else:
+            # login success
             # changing bus number of logged in user from default value of 0
-            global userbusno
-            userbusno = auth["bus_number"]
+
+            # global userbusno
+            # userbusno = auth["bus_number"]
+
+            session["userbusno"] = auth["bus_number"]
+            print("Session Cookie = ", session)
+
             return redirect(url_for("homepage"))
 
-        # rendering login page if auth fails
+        # rendering the same page (login page) if auth fails
         return render_template("index.html")
 
 
+# make this accessible from admin login alone
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     if request.method == "GET":
@@ -76,7 +85,7 @@ def signup():
         routeno = request.form.get("busroute")
 
         data = {
-            "bus_number": routeno,
+            "bus_number": int(routeno),
             "name": name,
             "college_mail_id": email,
             "password": password,
@@ -108,8 +117,9 @@ def signup():
 
 @app.route("/homepage")
 def homepage():
-    if userbusno != 0:
-        # going to main page only if busno is not 0, meaning someone has logged in
+    # if userbusno != 0:
+    if "userbusno" in session:
+        # going to main page only when userbusno is present in browser session
         return render_template("homepage.html")
     else:
         # re directing to login page (function name of login page is home, not to be confused)
@@ -118,7 +128,8 @@ def homepage():
 
 @app.route("/updates")
 def updates():
-    if userbusno != 0:
+    # if userbusno != 0:
+    if "userbusno" in session:
         client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
         str = []
 
@@ -133,7 +144,8 @@ def updates():
 
 @app.route("/report")
 def report():
-    if userbusno != 0:
+    # if userbusno != 0:
+    if "userbusno" in session:
         return render_template("report.html")
     else:
         return redirect(url_for("home"))
@@ -142,8 +154,9 @@ def report():
 @app.route("/logout")
 def logout():
     # changing userbusno variable to 0 after user logs out
-    global userbusno
-    userbusno = 0
+    # global userbusno
+    # userbusno = 0
+    session.pop("userbusno", None)  # popping userbusno from session
     return redirect(url_for("home"))
 
 
@@ -162,8 +175,9 @@ def location():
 
 @app.route("/busno")
 def busno():
-    global userbusno
-    return str(userbusno)
+    # global userbusno
+    # return str(userbusno)
+    return str(session["userbusno"])
 
 
 @app.route("/sharelocation", methods=["POST"])

@@ -92,7 +92,7 @@ function initMap() {
 window.initMap = initMap;
 
 function forgotpwd() {
-  prompt("To reset your password, submit your username or your email address below. If we can find you in the database, an email will be sent to your email address, with instructions how to get access again.", "");
+  prompt("To reset your password, submit your registration number or your email address below. If we can find you in the database, an email will be sent to your email address, with instructions how to get access again.", "");
 }
 
 async function currentpos() {

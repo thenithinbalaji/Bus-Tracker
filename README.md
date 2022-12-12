@@ -3,7 +3,7 @@
 This project was created using [Flask](https://flask.palletsprojects.com/en/2.2.x/) and
  <p align="center">
   <a href="#">
-    <img src="https://skillicons.dev/icons?i=figma,html,css,js,flask,mongodb,git,vscode,github" />
+    <img src="https://skillicons.dev/icons?i=figma,html,css,js,flask,mongodb" />
   </a>
 </p>
 

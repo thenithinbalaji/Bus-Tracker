@@ -160,19 +160,33 @@ def logout():
     return redirect(url_for("home"))
 
 
+# route to get live locations for all buses
 @app.route("/location")
 def location():
     client = pymongo.MongoClient(mongo_uri)["bustracker"]["buslocation"]
 
-    data = []
+    data = {}
 
     for document in client.find({}, {"_id": 0}):
-        item = [document["route"], document["location"][0], document["location"][1]]
-        data.append(item)
+        data[document["route"]] = [document["location"][0], document["location"][1]]
 
     return data
 
 
+# route to get stoppings data of all buses
+@app.route("/stoppings")
+def stoppings():
+    client = pymongo.MongoClient(mongo_uri)["bustracker"]["routes"]
+
+    data = {}
+
+    for document in client.find({}, {"_id": 0}):
+        data[document["route"]] = document["stops"]
+
+    return data
+
+
+# route to get bus number of current logged in user
 @app.route("/busno")
 def busno():
     # global userbusno
@@ -180,6 +194,7 @@ def busno():
     return str(session["userbusno"])
 
 
+# post requrest will be sent here to update the location to DB
 @app.route("/sharelocation", methods=["POST"])
 def sharelocation():
 

@@ -41,33 +41,99 @@ def home():
         college_mail_id = request.form.get("signin-email")
         password = request.form.get("signin-pswd")
 
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
-
-        # auth contains the collection that matches the mail id submitted in form
-        auth = client.find_one({"college_mail_id": college_mail_id})
-
-        # checking if password matches the db
-        if auth != None:  # making sure collection is not None
-            pbool = auth["password"] == password
-
-        if auth == None:
-            flash("imail", category="error")  # invalid mail
-        elif pbool == False:
-            flash("ipass", category="error")  # invalid password
+        # checking if admin
+        if college_mail_id == "admin@ssn" and password == "admin":
+            return redirect(url_for("admin"))
         else:
-            # login success
-            # changing bus number of logged in user from default value of 0
+            client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
 
-            # global userbusno
-            # userbusno = auth["bus_number"]
+            # auth contains the collection that matches the mail id submitted in form
+            auth = client.find_one({"college_mail_id": college_mail_id})
 
-            session["userbusno"] = auth["bus_number"]
-            print("Session Cookie = ", session)
+            # checking if password matches the db
+            if auth != None:  # making sure collection is not None
+                pbool = auth["password"] == password
 
-            return redirect(url_for("homepage"))
+            if auth == None:
+                flash("imail", category="error")  # invalid mail
+            elif pbool == False:
+                flash("ipass", category="error")  # invalid password
+            else:
+                # login success
+                # changing bus number of logged in user from default value of 0
+
+                # global userbusno
+                # userbusno = auth["bus_number"]
+
+                session["userbusno"] = auth["bus_number"]
+                print("Session Cookie = ", session)
+
+                return redirect(url_for("homepage"))
 
         # rendering the same page (login page) if auth fails
         return render_template("index.html")
+
+
+@app.route("/admin")
+def admin():
+    return render_template("adminhome.html")
+
+
+@app.route("/adminedit")
+def adminedit():
+    return render_template("adminrouteedit.html")
+
+
+@app.route("/adminann", methods=["POST", "GET"])
+def adminann():
+    if request.method == "GET":
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+        str = []
+
+        for i in client.find({}, {"_id": 0, "Message": 1}):
+            str.append(i["Message"])
+
+        return render_template("adminannounce.html", message=str)
+    else:
+        # posting issues
+        issue = request.form.get("message")
+
+        if len(issue) < 5:
+            flash(
+                "Message too short to be posted. Please be more elaborate!",
+                category="error",
+            )
+        else:
+            # success
+            flash(
+                "Your announcement has been made successfully. All the users can see your announcement",
+                category="success",
+            )
+
+            # inserting issue to mongoDB
+            client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+            data = {"Message": issue}
+            client.insert_one(data)
+
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+        str = []
+
+        for i in client.find({}, {"_id": 0, "Message": 1}):
+            str.append(i["Message"])
+
+        return render_template("adminannounce.html", message=str)
+
+
+@app.route("/adminissues")
+def adminissues():
+    client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
+    data = []
+
+    for i in client.find({}, {"_id": 0}):
+        iss = f"Passenger from Bus {str(i['frombus'])} posted \"{i['issue']}\""
+        data.append(iss)
+
+    return render_template("adminissues.html", message=data)
 
 
 # make this accessible from admin login alone

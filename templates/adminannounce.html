@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Bus Tracking System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body class="body">
+
+    <div
+        style="display: flex; flex-direction:column; justify-content:center; width: 100%;height: 150px;background: #FCFAF1;box-shadow: 0px 4px 20px 20px #AA8F00;border-radius: 0px 0px 80px 80px;">
+
+        <div style="display:flex; justify-content:space-evenly;">
+            <a href="/admin">
+                <img style="width: 200px;height: 100px;"
+                    src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}" alt="" />
+            </a>
+
+            <a href="/admin">
+                <img style="width: 200px;height: 100px;" src="{{url_for('static', filename='assets/ADMIN LOGO.png')}}"
+                    alt="" />
+            </a>
+        </div>
+    </div>
+
+    <div
+        style="background: #ffffff; height: 330px; margin:100px 50px 0px 50px; font-size: 20px; font-family: 'Mako'; font-weight: 400; overflow-y:scroll; border-radius:50px 0px 0px 50px; padding:25px; box-shadow: 10px 10px 20px #AA8F00;color: #705E00;">
+        <br>
+        <ul style="list-style-type: circle;">
+            {% for report in message %}
+            <li>{{ report }}</li> <br>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div style="display:flex; flex-direction:row; justify-content:center; margin-top: 20px;">
+        <div>
+            <div style="font-family: 'Mako';font-weight: 400;  font-size: 25px; color: #705E00;">
+                <p><b>Post a public announcement</b></p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+
+            {% if category == 'error' %}
+            <div
+                style="background-color: rgba(255, 150, 146, 0.804); text-align:center; padding:10px; border-radius:12px;">
+                {{ message }}
+            </div>
+            {% endif %}
+
+            {% if category == 'success' %}
+            <div style="background-color: #7ceca9; text-align:center; padding:10px; border-radius:12px;">
+                {{ message }}
+            </div>
+            {% endif%}
+
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <br />
+
+            <form accept="\adminann" method="post">
+
+                <input type="text"
+                    style="height:150px; width:550px; font-family: 'Mako';font-weight: 400;  font-size: 20px; box-shadow: 2px 2px 15px #AA8F00;"
+                    spellcheck="true" placeholder="Type your announcement here" name="message" />
+
+                <button type="submit"
+                    style="font-family: 'Mako';font-weight: 400;font-size: 20px; text-align: center;color: #705E00; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none; text-align:center; padding:10px 25px 10px 25px;">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+</body>
+
+</html>

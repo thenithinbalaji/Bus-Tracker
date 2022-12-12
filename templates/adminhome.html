@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Bus Tracking System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw0ddIErnntB_jNO1mEbWTg7tZya699cQ&callback=initMap&libraries=&v=weekly"
+        async></script>
+</head>
+
+<body onload="">
+
+    <div
+        style="display: flex; flex-direction:column; justify-content:center; width: 100%;height: 150px;background: #FCFAF1;box-shadow: 0px 4px 20px 20px #AA8F00;border-radius: 0px 0px 80px 80px;">
+
+        <div style="display:flex; justify-content:space-evenly;">
+            <a href="/admin">
+                <img style="width: 200px;height: 100px;"
+                    src="{{url_for('static', filename='assets/SSN BUS PIC WHITE.png')}}" alt="" />
+            </a>
+
+            <a href="/admin">
+                <img style="width: 200px;height: 100px;" src="{{url_for('static', filename='assets/ADMIN LOGO.png')}}"
+                    alt="" />
+            </a>
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:row; justify-content:space-evenly; margin-top:100px;">
+
+
+        <div style="display:flex; flex-direction:column;justify-content:center;">
+            <a href="\adminedit"
+                style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none">
+                Edit Stops
+            </a>
+
+            <a href="\adminissues"
+                style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none">
+                View Reported Issues
+            </a>
+
+            <a href="\adminann"
+                style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none">
+                Make Announcement
+            </a>
+
+            <a href="\"
+                style="width:100%; font-family: 'Mako';font-weight: 400;font-size: 16px; text-align: center;color: #705E00; width: 180px; height: 40px; background-color:white; border: 3px solid #E9C400;border-radius: 4px; cursor:pointer; margin-top:32px; display:flex; flex-direction:column; justify-content:center; text-decoration:none">
+                Log Out
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

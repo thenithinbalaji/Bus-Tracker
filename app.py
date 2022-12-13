@@ -43,6 +43,7 @@ def home():
 
         # checking if admin
         if college_mail_id == "admin@ssn" and password == "admin":
+            session["admin"] = True
             return redirect(url_for("admin"))
         else:
             client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
@@ -60,8 +61,8 @@ def home():
                 flash("ipass", category="error")  # invalid password
             else:
                 # login success
-                # changing bus number of logged in user from default value of 0
 
+                # changing bus number of logged in user from default value of 0
                 # global userbusno
                 # userbusno = auth["bus_number"]
 
@@ -76,109 +77,117 @@ def home():
 
 @app.route("/admin")
 def admin():
-    return render_template("adminhome.html")
-
-
-@app.route("/adminedit")
-def adminedit():
-    return render_template("adminrouteedit.html")
+    if "admin" in session:
+        return render_template("adminhome.html")
+    else:
+        return redirect(url_for("home"))
 
 
 @app.route("/adminann", methods=["POST", "GET"])
 def adminann():
-    if request.method == "GET":
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
-        str = []
-
-        for i in client.find({}, {"_id": 0, "Message": 1}):
-            str.append(i["Message"])
-
-        return render_template("adminannounce.html", message=str)
-    else:
-        # posting issues
-        issue = request.form.get("message")
-
-        if len(issue) < 5:
-            flash(
-                "Message too short to be posted. Please be more elaborate!",
-                category="error",
-            )
-        else:
-            # success
-            flash(
-                "Your announcement has been made successfully. All the users can see your announcement",
-                category="success",
-            )
-
-            # inserting issue to mongoDB
+    if "admin" in session:
+        if request.method == "GET":
             client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
-            data = {"Message": issue}
-            client.insert_one(data)
+            str = []
 
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
-        str = []
+            for i in client.find({}, {"_id": 0, "Message": 1}):
+                str.append(i["Message"])
 
-        for i in client.find({}, {"_id": 0, "Message": 1}):
-            str.append(i["Message"])
+            return render_template("adminannounce.html", message=str)
+        else:
+            # posting issues
+            issue = request.form.get("message")
 
-        return render_template("adminannounce.html", message=str)
+            if len(issue) < 5:
+                flash(
+                    "Message too short to be posted. Please be more elaborate!",
+                    category="error",
+                )
+            else:
+                # success
+                flash(
+                    "Your announcement has been made successfully. All the users can see your announcement",
+                    category="success",
+                )
+
+                # inserting announcements to mongoDB
+                client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+                data = {"Message": issue}
+                client.insert_one(data)
+
+            client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+            str = []
+
+            for i in client.find({}, {"_id": 0, "Message": 1}):
+                str.append(i["Message"])
+
+            return render_template("adminannounce.html", message=str)
+    else:
+        return redirect(url_for("home"))
 
 
 @app.route("/adminissues")
 def adminissues():
-    client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
-    data = []
+    if "admin" in session:
+        client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
+        data = []
 
-    for i in client.find({}, {"_id": 0}):
-        iss = f"Passenger from Bus {str(i['frombus'])} posted \"{i['issue']}\""
-        data.append(iss)
+        for i in client.find({}, {"_id": 0}):
+            iss = f"Passenger from Bus {str(i['frombus'])} posted \"{i['issue']}\""
+            data.append(iss)
 
-    return render_template("adminissues.html", message=data)
+        return render_template("adminissues.html", message=data)
+    else:
+        return redirect(url_for("home"))
 
 
 # make this accessible from admin login alone
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
-    if request.method == "GET":
-        return render_template("create_acc.html")
-    else:
-        # getting posted form data
-        name = request.form.get("name")
-        email = request.form.get("email")
-        password = request.form.get("pswd")
-        re_password = request.form.get("confpswd")
-        account_type = request.form.get("account")
-        routeno = request.form.get("busroute")
-
-        data = {
-            "bus_number": int(routeno),
-            "name": name,
-            "college_mail_id": email,
-            "password": password,
-            "role": account_type,
-        }
-
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
-
-        # checking if mail id exists already
-        auth = client.find_one({"college_mail_id": email})
-        if auth != None:
-            flash("The email id is already registered", category="error")
-        elif len(name) < 2:
-            flash("Name too short", category="error")
-        elif "@ssn" not in email:
-            flash(
-                "Invalid mail id, mail id must belong to ssn domain", category="error"
-            )
-        elif len(password) < 4:
-            flash("Password too short", category="error")
-        elif password != re_password:
-            flash("Passwords don't match", category="error")
+    if "admin" in session:
+        if request.method == "GET":
+            return render_template("create_acc.html")
         else:
-            client.insert_one(data)
-            flash("Registered Successfully", category="success")
+            # getting posted form data
+            name = request.form.get("name")
+            email = request.form.get("email")
+            password = request.form.get("pswd")
+            re_password = request.form.get("confpswd")
+            account_type = request.form.get("account")
+            routeno = request.form.get("busroute")
 
-        return render_template("create_acc.html")
+            data = {
+                "bus_number": int(routeno),
+                "name": name,
+                "college_mail_id": email,
+                "password": password,
+                "role": account_type,
+            }
+
+            client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
+
+            # checking if mail id exists already
+            auth = client.find_one({"college_mail_id": email})
+            if auth != None:
+                flash("The email id is already registered", category="error")
+            elif len(name) < 2:
+                flash("Name too short", category="error")
+            elif "@ssn" not in email:
+                flash(
+                    "Invalid mail id, mail id must belong to ssn domain",
+                    category="error",
+                )
+            elif len(password) < 4:
+                flash("Password too short", category="error")
+            elif password != re_password:
+                flash("Passwords don't match", category="error")
+            else:
+                client.insert_one(data)
+                flash("Registered Successfully", category="success")
+
+            return render_template("create_acc.html")
+    else:
+        return redirect(url_for("home"))
 
 
 @app.route("/homepage")
@@ -245,7 +254,11 @@ def logout():
     # changing userbusno variable to 0 after user logs out
     # global userbusno
     # userbusno = 0
-    session.pop("userbusno", None)  # popping userbusno from session
+    if "userbusno" in session:
+        session.pop("userbusno", None)
+    if "admin" in session:
+        session.pop("admin", None)
+
     return redirect(url_for("home"))
 
 
@@ -280,7 +293,10 @@ def stoppings():
 def busno():
     # global userbusno
     # return str(userbusno)
-    return str(session["userbusno"])
+    if "userbusno" in session:
+        return str(session["userbusno"])
+    else:
+        return None
 
 
 # post requrest will be sent here to update the location to DB

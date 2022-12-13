@@ -18,57 +18,57 @@
     <div class="sign-up">
 
       <div class="signup-heading">
-        <p>Sign Up</p>
+        <p>Create Account</p>
       </div>
 
       <!-- Alerts regarding entered creds in form  -->
       {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
+      {% if messages %}
+      {% for category, message in messages %}
 
-            {% if category == 'error' %}
-            <div style="background-color: rgba(255, 150, 146, 0.804); text-align:center; padding:10px; border-radius:12px;">
-              {{ message }}
-            </div>
-            {% endif %}
-        
-            {% if category == 'success' %}
-            <div style="background-color: #7ceca9; text-align:center; padding:10px; border-radius:12px;">
-              {{ message }}
-            </div>
-            {% endif%}
-      
-          {% endfor %}
-        {% endif %}
+      {% if category == 'error' %}
+      <div style="background-color: rgba(255, 150, 146, 0.804); text-align:center; padding:10px; border-radius:12px;">
+        {{ message }}
+      </div>
+      {% endif %}
+
+      {% if category == 'success' %}
+      <div style="background-color: #7ceca9; text-align:center; padding:10px; border-radius:12px;">
+        {{ message }}
+      </div>
+      {% endif%}
+
+      {% endfor %}
+      {% endif %}
       {% endwith %}
 
       <form action="\signup" method="post">
         <div class="signup-form">
-            <div class="signup-input">
-              <label class="signup-email-label" for="">Your Name</label><br />
-              <input type="text" id="signin-email" name="name" placeholder="Enter your Name" />
-            </div>
+          <div class="signup-input">
+            <label class="signup-email-label" for="">Name</label><br />
+            <input type="text" id="signin-email" name="name" placeholder="Enter the Name" />
+          </div>
 
-            <div class="signup-input">
-              <label class="signup-email-label" for="">Email ID</label><br />
-              <input type="text" id="signin-email" name="email" placeholder="Enter your Email ID" />
-            </div>
+          <div class="signup-input">
+            <label class="signup-email-label" for="">Email ID</label><br />
+            <input type="text" id="signin-email" name="email" placeholder="Enter Email ID" />
+          </div>
 
-            <div class="signup-input">
-              <label class="signup-pswd-label" for="">Password</label><br />
-              <input type="text" id="signup-pswd" name="pswd" placeholder="Enter your password" />
-            </div>
+          <div class="signup-input">
+            <label class="signup-pswd-label" for="">Password</label><br />
+            <input type="text" id="signup-pswd" name="pswd" placeholder="Enter password" />
+          </div>
 
-            <div class="signin-input">
-              <label class="signup-confpswd-label" for="">Confirm Password</label><br />
-              <input type="text" id="signup-confpswd" name="confpswd" placeholder="Re-enter your password" />
-            </div>
+          <div class="signin-input">
+            <label class="signup-confpswd-label" for="">Confirm Password</label><br />
+            <input type="text" id="signup-confpswd" name="confpswd" placeholder="Re-enter password" />
+          </div>
 
         </div>
 
         <div class="account-type">
-          <p>I am a:</p>
-          <input type="radio" name="account" value="passenger" checked/>
+          <p>Account Holder</p>
+          <input type="radio" name="account" value="passenger" checked />
           <label for="student">Student/Professor</label><br />
           <input type="radio" name="account" value="driver" />
           <label for="driver">Driver</label><br />
@@ -85,19 +85,18 @@
         </div>
 
         <div class="signup-button-div">
-          <button class="signup-button" type="submit">Sign Up</button>
+          <button class="signup-button" type="submit">Create</button>
         </div>
 
       </form>
 
-      <div>
-        <a class="back-to-signin" href="/">Already have an account? Sign In</a>
-      </div>
 
     </div>
 
     <div class="sign-up-logo">
-      <img class="img-sign-up-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}" />
+      <a href="\admin">
+        <img class="img-sign-up-logo" src="{{url_for('static', filename='assets/SSN BUS PIC.png')}}" />
+      </a>
     </div>
 
   </div>

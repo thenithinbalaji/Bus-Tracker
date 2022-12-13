@@ -1,0 +1,23 @@
+Route 1 Stoppings - Bus Default - Medavakkam - 12.9171, 80.1923
+----------------------------
+guindy - 13.0067, 80.2206
+chromepet - 12.9516, 80.1462
+sholinganallur - 12.9010, 80.2279
+
+Route 2 Stoppings - Bus Default - Sholinganallur - 12.9010, 80.2279
+---------------------------
+velachery - 12.9815, 80.2180
+navalur - 12.8459, 80.2265
+kelambakkam - 12.7897, 80.2216
+
+Route 3 Stoppings - Bus Default - Mudichur - 12.9150, 80.0720
+--------------------------
+tambaram - 12.9249, 80.1000
+padappai - 12.8866, 80.0216
+guduvancheri 12.8439, 80.0597
+
+Route 4 Stoppings - Bus Default - Nandavanam - 12.9788, 80.0605
+--------------------------
+thandalam - 13.0009, 80.1194
+somangalam - 12.9524, 80.0409
+kattangulathur - 12.8230, 80.0447

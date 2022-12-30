@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
+
   <meta charset="utf-8" />
   <title>Bus Tracking System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,9 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Mako&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" />
   <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw0ddIErnntB_jNO1mEbWTg7tZya699cQ&callback=initMap&libraries=&v=weekly"
-    async></script>
+
+  <!-- <script
+    src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap&libraries=&v=weekly"
+    async></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap"></script>
+
 </head>
 
 <body onload="getlocation(); getuserbus(); getstoppings();">
@@ -46,17 +50,6 @@
         </a>
       </div>
 
-      <!-- <div style="display: flex; flex-direction:column; justify-content:center">
-        <p class="choose">Choose Route</p>
-        <select name="choice-location" id="choice-location" style="border: 3px solid #E9C400;border-radius: 4px;"
-          onchange="initMap()">
-          <option value="none" selected disabled hidden>Pick a route</option>
-          <option value="none">None</option>
-          <option value="0">Route 1</option>
-          <option value="1">Route 2</option>
-          <option value="2">Route 3</option>
-        </select>
-      </div> -->
 
       <div style="display: flex; flex-direction:column; justify-content:center">
         <a href="\updates">

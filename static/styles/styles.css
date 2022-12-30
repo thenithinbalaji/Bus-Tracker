@@ -1,35 +1,37 @@
-body{
+body {
     background-color: #F3DE71;
     font-family: 'Mako';
-    
+
 }
 
 ::placeholder {
-    color:#E9C400;
+    color: #E9C400;
     opacity: 1;
-  }
+}
 
 /* SIGN IN PAGE CSS */
 
-.sign-in-container , .signup-container, .homepage-container{
-    display:grid;
+.sign-in-container,
+.signup-container,
+.homepage-container {
+    display: grid;
     margin: 0px;
     height: 100vh;
     gap: 20px;
 }
 
-.sign-in-logo{
+.sign-in-logo {
     grid-column-start: 1;
     grid-column-end: 2;
     height: 100%;
 }
 
-.img-sign-in-logo{
+.img-sign-in-logo {
     padding-top: 20%;
     padding-left: 25%;
 }
 
-.login{
+.login {
     grid-column-start: 2;
     grid-column-end: 3;
     background: #FCFAF1;
@@ -40,7 +42,8 @@ body{
     padding-right: 20%;
 }
 
-.login-heading, .signup-heading{
+.login-heading,
+.signup-heading {
     display: block;
     text-align: center;
     /* padding-left: 27%; */
@@ -56,7 +59,11 @@ body{
 }
 
 
-.signin-email-label, .signin-pswd-label, .signup-email-label, .signup-pswd-label, .signup-confpswd-label{
+.signin-email-label,
+.signin-pswd-label,
+.signup-email-label,
+.signup-pswd-label,
+.signup-confpswd-label {
     width: 86px;
     height: 24px;
 
@@ -71,12 +78,17 @@ body{
     flex-grow: 0;
 }
 
-.signin-input, .signup-input{
+.signin-input,
+.signup-input {
     padding: 2.5% 0%;
 }
 
 
-#signin-email , #signin-pswd , #signup-email , #signup-pswd , #signup-confpswd{
+#signin-email,
+#signin-pswd,
+#signup-email,
+#signup-pswd,
+#signup-confpswd {
 
     box-sizing: border-box;
 
@@ -97,18 +109,20 @@ body{
     flex-grow: 0;
 }
 
-.forgot-pswd{
-    
-    color:#E9C400;
+.forgot-pswd {
+
+    color: #E9C400;
     opacity: 1;
 }
 
-.signin-button-div, .signup-button-div{
+.signin-button-div,
+.signup-button-div {
     padding: 5% 40% 5% 35%;
 
 }
-.signin-button , .signup-button{
-    /*  */
+
+.signin-button,
+.signup-button {
     font-family: 'Mako';
     height: 30px;
     width: 100px;
@@ -122,79 +136,79 @@ body{
     border-radius: 4px;
 }
 
-.create-account{
-display: block;
+.create-account {
+    display: block;
 
-font-family: 'Mako';
-font-weight: 400;
-font-size: 16px;
+    font-family: 'Mako';
+    font-weight: 400;
+    font-size: 16px;
 
 
-text-align: center;
+    text-align: center;
 
-color: #E9C400;
+    color: #E9C400;
 }
 
 /* SIGN UP PAGE  */
 
 
-.sign-up{
+.sign-up {
 
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start:1;
+    grid-row-start: 1;
     grid-row-end: 3;
     background: #FCFAF1;
     height: 100%;
-    box-shadow: 0px 4px 20px 20px #AA8F00; 
+    box-shadow: 0px 4px 20px 20px #AA8F00;
     border-radius: 0px 80px 80px 0px;
     padding-left: 20%;
     padding-right: 20%;
 
 }
 
-.account-type{
-    color:#705E00;
+.account-type {
+    color: #705E00;
 }
 
-.signup-busroute-dropdown{
+.signup-busroute-dropdown {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin: 5% 25%;
 
-    color:#705E00;
+    color: #705E00;
 
     background: #F9F9F9;
     border: 3px solid #E9C400;
     border-radius: 4px;
 }
 
-.back-to-signin{
+.back-to-signin {
     margin-bottom: 30px;
     display: block;
-    
+
     font-family: 'Mako';
     font-weight: 400;
     font-size: 16px;
-    
-    
-    text-align: center;
-    
-    color: #E9C400;
-    }
 
-.sign-up-logo{
+
+    text-align: center;
+
+    color: #E9C400;
+}
+
+.sign-up-logo {
 
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start:1;
+    grid-row-start: 1;
     grid-row-end: 3;
     height: 100%;
 
 }
 
-.img-sign-up-logo{
+.img-sign-up-logo {
     padding-top: 25%;
     padding-left: 25%;
 }
@@ -204,35 +218,35 @@ color: #E9C400;
 
 
 
-.navbar{
+.navbar {
     position: absolute;
     display: block;
-    margin-left:0;
+    margin-left: 0;
     width: 100%;
     height: 25%;
     background: #FCFAF1;
-    top:0;
+    top: 0;
     box-shadow: 0px 4px 20px 20px #AA8F00;
     border-radius: 0px 0px 80px 80px;
 }
 
-.buspic{
+.buspic {
     padding-top: 10px;
     width: 200px;
     height: 100px;
     padding-left: 30px;
 }
 
-.map-item{
+.map-item {
     grid-row-start: 1;
     grid-row-end: 6;
 
     padding-left: 25%;
     padding-top: 15%;
-    
+
 }
 
-.box{
+.box {
     position: absolute;
 
     left: 50px;
@@ -242,14 +256,16 @@ color: #E9C400;
 
     background: #F9ECAA;
 }
-.location{
+
+.location {
     top: 40px;
     position: absolute;
     width: 150px;
     padding-left: 800px;
     padding-bottom: 30px;
 }
-.busRoute{
+
+.busRoute {
     top: 40px;
     position: absolute;
     width: 150px;
@@ -258,21 +274,21 @@ color: #E9C400;
     padding-bottom: 30px;
 }
 
-.reportbutton{
+.reportbutton {
     margin-bottom: 30px;
     display: block;
-    
+
     font-family: 'Mako';
     font-weight: 400;
     font-size: 16px;
-    
-    
+
+
     text-align: center;
-    
+
     color: #E9C400;
 }
 
-.choose{
+.choose {
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
@@ -280,14 +296,16 @@ color: #E9C400;
     margin-bottom: 5px;
     color: #705E00;
 }
-.issuebox{
-    color:#705E00;
+
+.issuebox {
+    color: #705E00;
     margin-top: 300px;
     padding-left: 550px;
 
 
 }
-.busbox{
+
+.busbox {
     flex-direction: row;
     align-items: center;
     padding: 8px;
@@ -307,7 +325,7 @@ color: #E9C400;
 
 
 
-.report{
+.report {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -326,7 +344,8 @@ color: #E9C400;
     color: #E9C400;
 
 }
-.goto-updates{
+
+.goto-updates {
     position: absolute;
     width: 50px;
     height: 50px;
@@ -334,13 +353,13 @@ color: #E9C400;
     top: 30px;
 }
 
-#map{
-  height: 400px;
-  width: 70%;
-  border-radius: 50px;
+#map {
+    height: 400px;
+    width: 70%;
+    border-radius: 50px;
 }
 
-.buttons-bar{
+.buttons-bar {
     grid-row-start: 7;
     grid-row-start: 8;
 
@@ -348,7 +367,8 @@ color: #E9C400;
     padding: 0% 40%;
 
 }
-.share-location-btn{
+
+.share-location-btn {
     padding: 2%;
     font-family: 'Mako';
     height: 50px;
@@ -356,7 +376,7 @@ color: #E9C400;
     position: relative;
     display: inline-block;
     align-items: center;
-    background: #FCFAF1;;
+    background: #FCFAF1;
     border: none;
     text-align: center;
     font-size: 16px;
@@ -367,7 +387,7 @@ color: #E9C400;
 
 }
 
-.logout-btn{
+.logout-btn {
     padding: 2%;
     font-family: 'Mako';
     height: 50px;

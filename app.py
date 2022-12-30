@@ -5,10 +5,10 @@ from flask import Flask, flash, redirect, render_template, request, url_for, ses
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "who am i"
-
+database_name = "bustrackerapp"  # make sure another db in same name doesn't exist, change this name to your custom one
 ############################################################################
 
-# load env variables
+# load env variables, "mongo uri" is in env
 try:
     from dotenv import load_dotenv
 
@@ -19,17 +19,96 @@ except Exception as err:
 # fetching mongo connection string
 try:
     mongo_uri = os.environ.get("mongo_connection_string")
-    print("MongoDB connection string = ", mongo_uri)
+    print("MongoDB connection string fetched from env = ", mongo_uri)
 except:
     # loading default connection string
     mongo_uri = "mongodb://localhost:27017"
-    # run a python function here that initialises a local mongoDB database and its collections if they do not exist (future)
+    print("MongoDB connection string default, localhost db = ", mongo_uri)
+
+# initialises a mongoDB database and its collections if they do not exist
+myclient = pymongo.MongoClient(mongo_uri)
+dblist = myclient.list_database_names()
+
+if database_name in dblist:
+    print(f"The '{database_name}' database exists")
+else:
+    mydb = myclient[database_name]
+
+    logincol = mydb["logininfo"]
+    logindata = {
+        "bus_number": 1,
+        "student_id": 1234567,
+        "name": "Nithin",
+        "college_mail_id": "user@ssn",
+        "password": "user",
+        "role": "Passenger",
+    }
+    logincol.insert_one(logindata)
+
+    routecol = mydb["routes"]
+    routesdata = [
+        {
+            "route": 1,
+            "stops": [[13.0067, 80.2206], [12.9516, 80.1462], [12.901, 80.2279]],
+        },
+        {
+            "route": 2,
+            "stops": [[12.9815, 80.218], [12.8459, 80.2265], [12.7897, 80.2216]],
+        },
+        {
+            "route": 3,
+            "stops": [
+                [12.9249, 80.1],
+                [12.8866, 80.0216],
+                [12.8439, 80.0597],
+                [12.9516, 80.1462],
+            ],
+        },
+        {
+            "route": 4,
+            "stops": [
+                [13.0009, 80.1194],
+                [12.9524, 80.0409],
+                [12.823, 80.0447],
+                [12.8866, 80.0216],
+            ],
+        },
+    ]
+    routecol.insert_many(routesdata)
+
+    issuecol = mydb["issues"]
+    issuedata = {"frombus": 2, "issue": "hi i am facing breakdown at kk nagar"}
+    issuecol.insert_one(issuedata)
+
+    annoucementscol = mydb["announcements"]
+    anndata = {"Message": "Bus 4 will leave in 5 mins"}
+    annoucementscol.insert_one(anndata)
+
+    locationcol = mydb["buslocation"]
+    locdata = [
+        {
+            "route": 1,
+            "location": [12.9171, 80.1923],
+        },
+        {
+            "route": 3,
+            "location": [12.915, 80.072],
+        },
+        {
+            "route": 4,
+            "location": [12.9788, 80.0605],
+        },
+        {
+            "route": 2,
+            "location": [12.901, 80.2279],
+        },
+    ]
+    locationcol.insert_many(locdata)
+
+    print(f"Database named {database_name} has been created in localhost")
+
 
 #############################################################################
-
-# variable for checking user has logged in or not, replace this with flask session
-# userbusno = 0
-# update: the global variable has been replace with Flask Session and it's working
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -46,7 +125,7 @@ def home():
             session["admin"] = True
             return redirect(url_for("admin"))
         else:
-            client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
+            client = pymongo.MongoClient(mongo_uri)[database_name]["logininfo"]
 
             # auth contains the collection that matches the mail id submitted in form
             auth = client.find_one({"college_mail_id": college_mail_id})
@@ -61,11 +140,6 @@ def home():
                 flash("ipass", category="error")  # invalid password
             else:
                 # login success
-
-                # changing bus number of logged in user from default value of 0
-                # global userbusno
-                # userbusno = auth["bus_number"]
-
                 session["userbusno"] = auth["bus_number"]
                 print("Session Cookie = ", session)
 
@@ -87,7 +161,7 @@ def admin():
 def adminann():
     if "admin" in session:
         if request.method == "GET":
-            client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+            client = pymongo.MongoClient(mongo_uri)[database_name]["announcements"]
             str = []
 
             for i in client.find({}, {"_id": 0, "Message": 1}):
@@ -111,11 +185,11 @@ def adminann():
                 )
 
                 # inserting announcements to mongoDB
-                client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+                client = pymongo.MongoClient(mongo_uri)[database_name]["announcements"]
                 data = {"Message": issue}
                 client.insert_one(data)
 
-            client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+            client = pymongo.MongoClient(mongo_uri)[database_name]["announcements"]
             str = []
 
             for i in client.find({}, {"_id": 0, "Message": 1}):
@@ -129,7 +203,7 @@ def adminann():
 @app.route("/adminissues")
 def adminissues():
     if "admin" in session:
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
+        client = pymongo.MongoClient(mongo_uri)[database_name]["issues"]
         data = []
 
         for i in client.find({}, {"_id": 0}):
@@ -164,7 +238,7 @@ def signup():
                 "role": account_type,
             }
 
-            client = pymongo.MongoClient(mongo_uri)["bustracker"]["logininfo"]
+            client = pymongo.MongoClient(mongo_uri)[database_name]["logininfo"]
 
             # checking if mail id exists already
             auth = client.find_one({"college_mail_id": email})
@@ -192,7 +266,6 @@ def signup():
 
 @app.route("/homepage")
 def homepage():
-    # if userbusno != 0:
     if "userbusno" in session:
         # going to main page only when userbusno is present in browser session
         return render_template("homepage.html")
@@ -205,7 +278,7 @@ def homepage():
 def updates():
     # if userbusno != 0:
     if "userbusno" in session:
-        client = pymongo.MongoClient(mongo_uri)["bustracker"]["announcements"]
+        client = pymongo.MongoClient(mongo_uri)[database_name]["announcements"]
         str = []
 
         for i in client.find({}, {"_id": 0, "Message": 1}):
@@ -242,7 +315,7 @@ def report():
             )
 
             # inserting issue to mongoDB
-            client = pymongo.MongoClient(mongo_uri)["bustracker"]["issues"]
+            client = pymongo.MongoClient(mongo_uri)[database_name]["issues"]
             data = {"frombus": session["userbusno"], "issue": issue}
             client.insert_one(data)
 
@@ -251,9 +324,6 @@ def report():
 
 @app.route("/logout")
 def logout():
-    # changing userbusno variable to 0 after user logs out
-    # global userbusno
-    # userbusno = 0
     if "userbusno" in session:
         session.pop("userbusno", None)
     if "admin" in session:
@@ -265,7 +335,7 @@ def logout():
 # route to get live locations for all buses
 @app.route("/location")
 def location():
-    client = pymongo.MongoClient(mongo_uri)["bustracker"]["buslocation"]
+    client = pymongo.MongoClient(mongo_uri)[database_name]["buslocation"]
 
     data = {}
 
@@ -278,7 +348,7 @@ def location():
 # route to get stoppings data of all buses
 @app.route("/stoppings")
 def stoppings():
-    client = pymongo.MongoClient(mongo_uri)["bustracker"]["routes"]
+    client = pymongo.MongoClient(mongo_uri)[database_name]["routes"]
 
     data = {}
 
@@ -291,8 +361,6 @@ def stoppings():
 # route to get bus number of current logged in user
 @app.route("/busno")
 def busno():
-    # global userbusno
-    # return str(userbusno)
     if "userbusno" in session:
         return str(session["userbusno"])
     else:
@@ -307,7 +375,7 @@ def sharelocation():
     lat = request.json["lat"]
     long = request.json["long"]
 
-    client = pymongo.MongoClient(mongo_uri)["bustracker"]["buslocation"]
+    client = pymongo.MongoClient(mongo_uri)[database_name]["buslocation"]
 
     client.update_one({"route": busno}, {"$set": {"location": [lat, long]}})
 
@@ -315,4 +383,4 @@ def sharelocation():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

@@ -24,7 +24,6 @@ async function getstoppings() {
 
 function initMap() {
   bus_number = document.getElementById("choice-busroute").value
-  // location_number = document.getElementById("choice-location").value
 
   var center = { lat: 12.8923, lng: 80.1889 }; // coods of Perumbakkam
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -91,14 +90,11 @@ async function currentpos() {
   navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
 
   console.log(userbusno)
-  alert("Your Location has been shared for Bus " + userbusno)
+  alert("Your Location has been shared for Bus " + userbusno + ". Reload the page to see changes")
 
 }
 
 function clearmap() {
-  // document.getElementById("choice-location").value = "none";
   document.getElementById("choice-busroute").value = "none";
-
   initMap()
-
 }
